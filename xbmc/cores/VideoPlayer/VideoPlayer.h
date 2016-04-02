@@ -181,6 +181,7 @@ struct SelectionStream
   std::string filename;
   std::string filename2;  // for vobsub subtitles, 2 files are necessary (idx/sub)
   std::string language;
+  std::string language2;  // for dual-mono audio
   std::string name;
   StreamFlags flags = StreamFlags::FLAG_NONE;
   int source = 0;
@@ -197,6 +198,8 @@ struct SelectionStream
   std::string stereo_mode;
   float aspect_ratio = 0.0f;
   StreamHdrType hdrType = StreamHdrType::HDR_TYPE_NONE;
+  bool is_dmono = false;
+  EDMONOMODE dmono_mode = EDMONOMODE::DMONO_LEFT;
 };
 
 class CSelectionStreams
@@ -259,6 +262,7 @@ public:
   float GetCachePercentage() override;
 
   void SetDynamicRangeCompression(long drc) override;
+  void SetAudioDmonoMode(EDMONOMODE mode) override;
   bool CanPause() override;
   void SetAVDelay(float fValue = 0.0f) override;
   float GetAVDelay() override;

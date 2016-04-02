@@ -37,6 +37,7 @@ public:
   enum AVMatrixEncoding GetMatrixEncoding() override;
   enum AVAudioServiceType GetAudioServiceType() override;
   int GetProfile() override;
+  virtual void SetDmonoMode(int mode);
 
 protected:
   int GetData(uint8_t** dst);
@@ -60,5 +61,6 @@ protected:
   uint64_t m_layout;
   std::string m_codecName;
   uint64_t m_hint_layout;
+  int m_iDmonoMode;
 };
 

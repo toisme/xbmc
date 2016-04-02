@@ -49,6 +49,7 @@ public:
   }
   void FlushMessages() override { m_messageQueue.Flush(); }
 
+  void SetDmonoMode(int mode) override;
   void SetDynamicRangeCompression(long drc) override { m_audioSink.SetDynamicRangeCompression(drc); }
   float GetDynamicRangeAmplification() const override { return 0.0f; }
 
