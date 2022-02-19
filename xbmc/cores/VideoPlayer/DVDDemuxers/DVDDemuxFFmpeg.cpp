@@ -1196,6 +1196,9 @@ DemuxPacket* CDVDDemuxFFmpeg::Read()
             ((CDemuxStreamAudio*)stream)->sublang = std::string(e2->value, 3);
           else
             ((CDemuxStreamAudio*)stream)->sublang = "";
+
+          // content has changed
+          stream = AddStream(pPacket->iStreamId);
         }
       }
     }
