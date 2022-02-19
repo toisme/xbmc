@@ -22,6 +22,8 @@
   <a href="https://github.com/xbmc/xbmc/commits/master"><img alt="Commits" src="https://img.shields.io/github/commits-since/xbmc/xbmc/latest.svg?style=flat-square"></a>
 </p>
 
+Leia 18.9 にデュアルモノ音声対応パッチといくつかの不具合修正を追加した Fork
+
 <h1 align="center">
   Welcome to Kodi Home Theater Software!
 </h1>
