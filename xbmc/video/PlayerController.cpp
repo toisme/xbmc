@@ -204,28 +204,29 @@ bool CPlayerController::OnAction(const CAction &action)
         int audioStreamCount = g_application.GetAppPlayer().GetAudioStreamCount();
 
         AudioStreamInfo info;
-        std::string language;
         g_application.GetAppPlayer().GetAudioStreamInfo(currentAudio, info);
-        if (info.is_dmono && info.dmono_mode == EDMONOMODE::DMONO_LEFT)
-        {
-          g_application.GetAppPlayer().SetAudioDmonoMode(EDMONOMODE::DMONO_RIGHT);
-          language = info.language2;
-        }
-        else if (!info.is_dmono && audioStreamCount <= 1)
+
+        if (g_application.GetAppPlayer().GetAudioStreamCount() == 1 && !info.is_dmono)
           return true;
-        else
+
+        if (!info.is_dmono)
         {
           if (++currentAudio >= audioStreamCount)
             currentAudio = 0;
           g_application.GetAppPlayer().SetAudioStream(currentAudio);    // Set the audio stream to the one selected
-          g_application.GetAppPlayer().GetAudioStreamInfo(currentAudio, info);
-          g_application.GetAppPlayer().SetAudioDmonoMode(EDMONOMODE::DMONO_LEFT);
-          language = info.language;
+        }
+        else
+        {
+          if (info.dmono_mode == EDMONOMODE::DMONO_LEFT)
+            g_application.GetAppPlayer().SetAudioDmonoMode(EDMONOMODE::DMONO_RIGHT);
+          else
+            g_application.GetAppPlayer().SetAudioDmonoMode(EDMONOMODE::DMONO_LEFT);
         }
 
         std::string aud;
         std::string lan;
-        if (!g_LangCodeExpander.Lookup(language, lan))
+        g_application.GetAppPlayer().GetAudioStreamInfo(currentAudio, info);
+        if (!g_LangCodeExpander.Lookup(info.language, lan))
           lan = g_localizeStrings.Get(13205); // Unknown
         if (info.name.empty())
           aud = lan;
