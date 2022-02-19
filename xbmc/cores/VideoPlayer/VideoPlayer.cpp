@@ -2724,6 +2724,10 @@ void CVideoPlayer::HandleMessages()
         m_dvd.state = DVDSTATE_SEEK;
 
       m_processInfo->SetStateSeeking(false);
+
+      SelectionStream& s = m_SelectionStreams.Get(STREAM_AUDIO, GetAudioStream());
+      if (s.is_dmono)
+        SetAudioDmonoMode(s.dmono_mode);
     }
     else if (pMsg->IsType(CDVDMsg::PLAYER_SEEK_CHAPTER) &&
              m_messenger.GetPacketCount(CDVDMsg::PLAYER_SEEK) == 0 &&
@@ -5198,7 +5202,14 @@ void CVideoPlayer::SetAudioDmonoMode(EDMONOMODE mode)
     CSingleLock lock(m_content.m_section);
 
     SelectionStream& s = m_SelectionStreams.Get(STREAM_AUDIO, index);
-    s.dmono_mode = mode;
+    if (s.dmono_mode != mode)
+    {
+      s.dmono_mode = mode;
+      std::string lan = s.language;
+      s.language = s.language2;
+      s.language2 = lan;
+      UpdateContent();
+    }
   }
   m_CurrentAudio.hint.dmono_mode = mode;
 
@@ -5208,6 +5219,8 @@ void CVideoPlayer::SetAudioDmonoMode(EDMONOMODE mode)
     ((CDemuxStreamAudio*)stream)->iDmonoMode = mode;
 
   m_VideoPlayerAudio->SetDmonoMode(mode);
+
+  CServiceBroker::GetDataCacheCore().SignalAudioInfoChange();
 }
 
 void CVideoPlayer::GetSubtitleStreamInfo(int index, SubtitleStreamInfo &info)
