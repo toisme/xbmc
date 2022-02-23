@@ -22,6 +22,8 @@
   <a href="https://github.com/xbmc/xbmc/commits/master"><img alt="Commits" src="https://img.shields.io/github/commits-since/xbmc/xbmc/latest.svg?style=flat-square"></a>
 </p>
 
+Matrix 19.3 にデュアルモノ音声対応パッチといくつかの不具合修正を追加した Fork
+
 <a href="https://play.google.com/store/apps/details?id=org.xbmc.kodi" target="_blank">
   <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/>
 </a>
